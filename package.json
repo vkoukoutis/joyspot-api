@@ -1,13 +1,17 @@
 {
   "name": "yummy-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "The best food website for ordering & finding food recipes in town",
   "main": "server.js",
   "scripts": {
     "start": "node dist/server.js",
     "dev": "nodemon src/server.js --ext js,graphql --exec babel-node",
     "build": "babel src -d dist && cp ./src/typeDefs/schema.graphql ./dist",
     "heroku-postbuild": "npm run build"
+  },
+  "engines": {
+    "node": "11.9.0",
+    "npm": "6.9.0"
   },
   "author": "Vasilis Koukoutis",
   "license": "MIT",
