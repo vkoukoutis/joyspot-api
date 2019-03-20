@@ -26,7 +26,7 @@ Run docker application then execute in your terminal,
 
 Application is deploy in heroku.com and running in production mode.
 
-- Link that can be used to test front-end: https://yummy-graphql-api.herokuapp.com/
+- Link that can be used to test front-end: https://yummy-graphql-api.herokuapp.com/graphql
 
 ## Built With
 
