@@ -8,7 +8,8 @@ require('dotenv').config();
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  introspection: true
+  introspection: true,
+  playground: true
 });
 
 const app = express();
