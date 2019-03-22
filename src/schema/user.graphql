@@ -5,8 +5,3 @@ type User {
   password: String!
   avatar: String
 }
-
-type AuthPayload {
-  token: String!
-  user: User!
-}

@@ -10,19 +10,16 @@ export const Mutation = {
     //Hash Password
     const password = await bcrypt.hash(args.password, 10);
     // Create User
-    const user = await ctx.db.mutation.createUser({
-      data: {
-        ...args,
-        password
-      }
+    const user = await new ctx.User({ ...args, password }).save();
+    //Create & set token
+    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET);
+
+    ctx.res.cookie('token', token, {
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24 * 1
     });
 
-    return {
-      user,
-      token: jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
-        expiresIn: '1d'
-      })
-    };
+    return user;
   },
   async signin(parent, { email, password }, ctx, info) {
     if (!email || !password) {
@@ -30,22 +27,24 @@ export const Mutation = {
     }
 
     //Check if there is a user with that email
-    const user = await ctx.db.query.user({ where: { email } });
+    const user = await ctx.User.findOne({ email });
     if (!user) {
       throw new Error(`No such user found for email ${email}`);
     }
-    //CCheck if their password is correct
+    //Check if their password is correct
     const valid = await bcrypt.compare(password, user.password);
     if (!valid) {
       throw new Error('Invalid Password!');
     }
 
-    return {
-      user,
-      token: jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
-        expiresIn: '1d'
-      })
-    };
+    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET);
+
+    ctx.res.cookie('token', token, {
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24 * 1
+    });
+
+    return user;
   },
   async updateUser(parent, { email, name, avatar }, ctx, info) {
     const userId = getUser(ctx);

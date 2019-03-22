@@ -4,10 +4,12 @@ import { ApolloServer } from 'apollo-server-express';
 import schema from './schema';
 import { resolvers } from './resolvers';
 import cors from 'cors';
+import jwt from 'jsonwebtoken';
+import cookieParser from 'cookie-parser';
 import mongoose from 'mongoose';
+import { User } from './models/User';
 
 require('dotenv').config();
-require('./models/User');
 
 mongoose.Promise = global.Promise;
 mongoose
@@ -17,21 +19,17 @@ mongoose
   })
   .catch(err => console.error(err));
 
-const server = new ApolloServer({
-  typeDefs: schema,
-  resolvers,
-  introspection: true,
-  playground: true
-});
-
 const app = express();
-server.applyMiddleware({ app });
+
+app.use(cookieParser(process.env.COOKIE_SECRET));
 
 let allowedOrigins = [
   'http://localhost:3000',
+  'http://localhost:4000',
   process.env.FRONTEND_URL,
   process.env.SSL_FRONTEND_URL
 ];
+
 app.use(
   cors({
     origin: function(origin, callback) {
@@ -48,6 +46,30 @@ app.use(
     }
   })
 );
+
+app.use((req, res, next) => {
+  const { token } = req.cookies;
+
+  if (token) {
+    const { userId } = jwt.verify(token, process.env.JWT_SECRET);
+    req.userId = userId;
+  }
+  next();
+});
+
+const server = new ApolloServer({
+  typeDefs: schema,
+  resolvers,
+  introspection: true,
+  playground: true,
+  context: ({ req, res }) => ({
+    ...req,
+    ...res,
+    User
+  })
+});
+
+server.applyMiddleware({ app });
 
 const PORT = process.env.PORT || 4000;
 app.listen({ port: PORT });
