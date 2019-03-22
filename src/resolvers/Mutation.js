@@ -10,7 +10,7 @@ export const Mutation = {
     //Hash Password
     const password = await bcrypt.hash(args.password, 10);
     // Create User
-    const user = await new ctx.User({ ...args, password }).save();
+    const user = await new ctx.model.User({ ...args, password }).save();
     //Create & set token
     const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET);
 
@@ -27,7 +27,7 @@ export const Mutation = {
     }
 
     //Check if there is a user with that email
-    const user = await ctx.User.findOne({ email });
+    const user = await ctx.model.User.findOne({ email });
     if (!user) {
       throw new Error(`No such user found for email ${email}`);
     }

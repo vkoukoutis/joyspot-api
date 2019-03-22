@@ -4,7 +4,7 @@ export const Query = {
       return null;
     }
 
-    return ctx.User.findById(ctx.req.userId);
+    return ctx.model.User.findById(ctx.req.userId);
   },
   users(parent, args, ctx, info) {
     return [

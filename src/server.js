@@ -65,7 +65,9 @@ const server = new ApolloServer({
   context: ({ req, res }) => ({
     ...req,
     ...res,
-    User
+    model: {
+      User
+    }
   })
 });
 
