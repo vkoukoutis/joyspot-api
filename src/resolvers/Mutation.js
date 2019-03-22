@@ -47,18 +47,14 @@ export const Mutation = {
     return user;
   },
   async updateUser(parent, { email, name, avatar }, ctx, info) {
-    const userId = getUser(ctx);
-
-    if (!userId) {
+    if (!ctx.req.userId) {
       throw Error('Please signin first');
     }
 
-    const user = await ctx.db.mutation.updateUser(
-      {
-        where: { id: userId },
-        data: { email, name, avatar }
-      },
-      info
+    const user = await ctx.model.User.findOneAndUpdate(
+      { _id: ctx.req.userId },
+      { $set: { email, name, avatar } },
+      { returnNewDocument: true }
     );
 
     return user;
