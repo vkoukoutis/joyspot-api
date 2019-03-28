@@ -1,8 +1,8 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
-export const Mutation = {
-  async signup(parent, args, ctx, info) {
+export const User = {
+  async signup(parent, args, ctx) {
     if (!args.email || !args.name || !args.password) {
       throw Error('Please fill all fields.');
     }
@@ -21,7 +21,7 @@ export const Mutation = {
 
     return user;
   },
-  async signin(parent, { email, password }, ctx, info) {
+  async signin(parent, { email, password }, ctx) {
     if (!email || !password) {
       throw Error('Please fill all fields.');
     }
@@ -46,7 +46,7 @@ export const Mutation = {
 
     return user;
   },
-  async updateUser(parent, { email, name, avatar }, ctx, info) {
+  async updateUser(parent, { email, name, avatar }, ctx) {
     if (!ctx.req.userId) {
       throw Error('Please signin first');
     }

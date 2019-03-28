@@ -7,7 +7,9 @@ import cors from 'cors';
 import jwt from 'jsonwebtoken';
 import cookieParser from 'cookie-parser';
 import mongoose from 'mongoose';
+import Api from './utils/Api';
 import { User } from './models/User';
+import { Product } from './models/Product';
 
 require('dotenv').config();
 
@@ -68,7 +70,11 @@ const server = new ApolloServer({
     ...req,
     ...res,
     model: {
-      User
+      User,
+      Product
+    },
+    util: {
+      Api
     }
   })
 });

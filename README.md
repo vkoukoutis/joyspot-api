@@ -1,6 +1,6 @@
 # yummy - api
 
-The best food website for ordering & finding food recipes in town.
+The best food website for ordering & finding recipes in town.
 
 ## Getting Started
 

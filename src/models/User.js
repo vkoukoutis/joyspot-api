@@ -22,6 +22,10 @@ const userSchema = new Schema({
   avatar: {
     type: String
   },
+  balance: {
+    type: Number,
+    default: 10
+  },
   joinedAt: {
     type: Date,
     default: Date.now

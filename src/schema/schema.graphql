@@ -1,4 +1,5 @@
 # import * from 'user.graphql'
+# import * from 'product.graphql'
 
 type Query {
   me: User
@@ -14,4 +15,5 @@ type Mutation {
   ): User!
   signin(email: String!, password: String!): User!
   updateUser(email: String, name: String, avatar: String): User!
+  searchProduct(title: String!, number: Int, offset: Int): [Product]!
 }

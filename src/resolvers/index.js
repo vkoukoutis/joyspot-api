@@ -1,7 +1,11 @@
 import { Query } from './Query';
-import { Mutation } from './Mutation';
+import { User } from './Mutations/User';
+import { Product } from './Mutations/Product';
 
 export const resolvers = {
   Query,
-  Mutation
+  Mutation: {
+    ...User,
+    ...Product
+  }
 };
