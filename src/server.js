@@ -29,9 +29,7 @@ let allowedOrigins = [
   'http://localhost:3000',
   'http://localhost:4000',
   process.env.FRONTEND_URL,
-  process.env.SSL_FRONTEND_URL,
-  process.env.SSL_HEROKU_URL,
-  process.env.HEROKU_URL
+  process.env.SSL_FRONTEND_URL
 ];
 
 app.use(
