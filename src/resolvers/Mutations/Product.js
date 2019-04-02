@@ -1,5 +1,5 @@
 export const Product = {
-  async searchProduct(parent, { title, number = 10, offset = 0 }, ctx) {
+  async searchProduct(parent, { title, number = 50, offset = 0 }, ctx) {
     if (!ctx.req.userId) {
       throw Error('Please signin first');
     }
@@ -16,8 +16,10 @@ export const Product = {
       title: { $in: data.products.map(product => product.title) }
     });
 
-    if (filteredData.length) return [];
+    if (filteredData.length) return false;
 
-    return ctx.model.Product.insertMany(data.products);
+    await ctx.model.Product.insertMany(data.products);
+
+    return true;
   }
 };

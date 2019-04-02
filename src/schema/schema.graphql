@@ -2,8 +2,10 @@
 # import * from 'product.graphql'
 
 type Query {
-  me: User
-  users: [User]!
+  me: User!
+  users: [User!]!
+  products: [Product!]!
+  product(id: ID!): Product!
 }
 
 type Mutation {
@@ -15,5 +17,5 @@ type Mutation {
   ): User!
   signin(email: String!, password: String!): User!
   updateUser(email: String, name: String, avatar: String): User!
-  searchProduct(title: String!, number: Int, offset: Int): [Product]!
+  searchProduct(title: String!, number: Int, offset: Int): Boolean!
 }
