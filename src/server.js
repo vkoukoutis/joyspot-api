@@ -5,20 +5,14 @@ import schema from './schema';
 import { resolvers } from './resolvers';
 import jwt from 'jsonwebtoken';
 import cookieParser from 'cookie-parser';
-import mongoose from 'mongoose';
+import loadDB from './utils/mongodb';
 import Api from './utils/Api';
 import { User } from './models/User';
 import { Product } from './models/Product';
 
 require('dotenv').config();
 
-mongoose.Promise = global.Promise;
-mongoose
-  .connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useCreateIndex: true
-  })
-  .catch(err => console.error(err));
+loadDB(process.env.MONGO_URI);
 
 const app = express();
 
@@ -47,7 +41,7 @@ const server = new ApolloServer({
       Product
     },
     util: {
-      Api
+      Api: Api(process.env.API_LINK, process.env.API_KEY)
     }
   })
 });
