@@ -16,6 +16,7 @@ type Mutation {
     avatar: String
   ): User!
   signin(email: String!, password: String!): User!
+  signout: Boolean!
   updateUser(email: String, name: String, avatar: String): User!
   searchProduct(title: String!, number: Int, offset: Int): Boolean!
 }

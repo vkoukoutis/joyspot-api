@@ -46,6 +46,10 @@ export const User = {
 
     return user;
   },
+  signout(parent, args, ctx, info) {
+    ctx.res.clearCookie('token');
+    return true;
+  },
   async updateUser(parent, { email, name, avatar }, ctx) {
     if (!ctx.req.userId) {
       throw Error('Please signin first');

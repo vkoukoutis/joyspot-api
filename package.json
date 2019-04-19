@@ -25,17 +25,17 @@
     "graphql-import": "^0.7.1",
     "graphql-tools": "^4.0.4",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.4.21"
+    "mongoose": "^5.5.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.2.3",
-    "@babel/core": "^7.4.0",
+    "@babel/cli": "^7.4.3",
+    "@babel/core": "^7.4.3",
     "@babel/node": "^7.2.2",
-    "@babel/plugin-proposal-object-rest-spread": "^7.4.0",
-    "@babel/polyfill": "^7.4.0",
-    "@babel/preset-env": "^7.4.2",
+    "@babel/plugin-proposal-object-rest-spread": "^7.4.3",
+    "@babel/polyfill": "^7.4.3",
+    "@babel/preset-env": "^7.4.3",
     "babel-plugin-graphql-tag": "^2.1.0",
-    "nodemon": "^1.18.10"
+    "nodemon": "^1.18.11"
   },
   "prettier": {
     "semi": true,
