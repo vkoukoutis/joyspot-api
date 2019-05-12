@@ -1,0 +1,62 @@
+{
+  "name": "joyspot-api",
+  "version": "1.0.0",
+  "description": "The most advantage gaming experience on the web",
+  "main": "server.js",
+  "scripts": {
+    "start": "node dist/server.js",
+    "dev": "nodemon app/server.js --ext js,graphql --exec babel-node",
+    "build": "babel app -d dist && cp ./app/graphql/gql/*.graphql ./dist"
+  },
+  "engines": {
+    "node": "11.9.0",
+    "npm": "6.9.0"
+  },
+  "now": {
+    "engines": {
+      "node": "11.9.0",
+      "npm": "6.9.0"
+    }
+  },
+  "author": "Vasilis Koukoutis",
+  "license": "MIT",
+  "dependencies": {
+    "apollo-server-express": "^2.4.8",
+    "axios": "^0.18.0",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.4",
+    "cross-env": "^5.2.0",
+    "dotenv": "^7.0.0",
+    "express": "^4.16.4",
+    "graphql": "^14.2.1",
+    "graphql-import": "^0.7.1",
+    "graphql-tag": "^2.10.1",
+    "helmet": "^3.16.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.5.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.11",
+    "@babel/cli": "^7.4.3",
+    "@babel/core": "^7.4.3",
+    "@babel/node": "^7.2.2",
+    "@babel/plugin-proposal-object-rest-spread": "^7.4.3",
+    "@babel/polyfill": "^7.4.3",
+    "@babel/preset-env": "^7.4.3",
+    "babel-plugin-graphql-tag": "^2.1.0"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ],
+    "plugins": [
+      "@babel/plugin-proposal-object-rest-spread",
+      "graphql-tag"
+    ]
+  }
+}
