@@ -5,6 +5,7 @@ WORKDIR /usr/src/joyspot-api
 
 COPY package.json /usr/src/joyspot-api
 RUN npm install
+RUN npm ci
 
 COPY . /usr/src/joyspot-api
 
