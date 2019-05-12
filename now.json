@@ -1,6 +1,0 @@
-{
-  "version": 2,
-  "name": "joyspot-api",
-  "builds": [{ "src": "app/server.js", "use": "@now/node" }],
-  "routes": [{ "src": "/.*", "dest": "app/server.js" }]
-}
