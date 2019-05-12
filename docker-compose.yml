@@ -1,4 +1,4 @@
-version: '3.7'
+version: "3.7"
 
 services:
   # MongoDB
@@ -6,7 +6,7 @@ services:
     container_name: mongodb
     image: mongo
     ports:
-      - '27017:27017'
+      - "27017:27017"
 
   # Backend API
   joyspot-api:
@@ -17,6 +17,6 @@ services:
     depends_on:
       - mongodb
     ports:
-      - '4000:4000'
+      - "4000:4000"
     volumes:
       - ./:/usr/src/joyspot-api
