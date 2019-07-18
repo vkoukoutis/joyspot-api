@@ -26,7 +26,7 @@ Run docker application then execute in your terminal,
 
 Application is deploy in heroku.com and running in production mode.
 
-- Link that can be used to test front-end: https://joyspot-graphql-api.herokuapp.com/graphql
+- Link that can be used to test front-end: https://joyspot-api.herokuapp.com/graphql
 
 ## Built With
 

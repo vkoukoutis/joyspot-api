@@ -1,12 +1,12 @@
 FROM node:11.9.0
 
-RUN mkdir -p /usr/src/yummy-api
-WORKDIR /usr/src/yummy-api
+RUN mkdir -p /usr/src/joyspot-api
+WORKDIR /usr/src/joyspot-api
 
-COPY package.json /usr/src/yummy-api
+COPY package.json /usr/src/joyspot-api
 RUN npm install
 
-COPY . /usr/src/yummy-api
+COPY . /usr/src/joyspot-api
 
 ARG NODE_VERSION=11.9.0
 
