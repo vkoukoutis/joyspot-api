@@ -1,11 +1,11 @@
 module.exports = factory
 
-function factory(env, ApolloServer, Api, resolvers, schema, models) {
+function factory(ApolloServer, Api, resolvers, schema, models) {
   const exports = { applyApollo }
 
   function applyApollo(app) {
     const corsOptions = {
-      origin: env.FRONTEND_URL,
+      origin: process.env.FRONTEND_URL,
       credentials: true
     }
     const server = ApolloConfig

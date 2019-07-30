@@ -1,4 +1,4 @@
-const env = require('dotenv').config().parsed
+require('dotenv').config()
 const express = require('express')
 const apollo = require('apollo-server-express')
 const cookieParser = require('cookie-parser')
@@ -13,7 +13,7 @@ const resolvers = require('require-all')({
   dirname: __dirname + '/graphql/resolvers',
   filter: /(.+)\.js$/,
   resolve: function(Resolver) {
-    return new Resolver(env, jwt, bcrypt)
+    return new Resolver(jwt, bcrypt)
   }
 })
 const models = require('require-all')({
@@ -25,10 +25,9 @@ const models = require('require-all')({
 })
 const schema = require('./graphql/graphqlSchema')(graphqlImport)
 
-const middleware = require('./middleware')(cookieParser, jwt, helmet, env)
-const services = require('./services')(axios, mongoose, env)
+const middleware = require('./middleware')(cookieParser, jwt, helmet)
+const services = require('./services')(axios, mongoose)
 const graphql = require('./graphql')(
-  env,
   apollo.ApolloServer,
   services.Api,
   resolvers,
@@ -39,7 +38,7 @@ const graphql = require('./graphql')(
 const app = express()
 
 middleware.applyMiddleware(app)
-services.connectDatabase(env.MONGO_URI)
+services.connectDatabase(process.env.MONGO_URI)
 graphql.applyApollo(app)
 
 const PORT = process.env.PORT || 4000

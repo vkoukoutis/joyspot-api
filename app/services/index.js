@@ -1,13 +1,13 @@
 module.exports = factory
 
-function factory(axios, mongoose, { API_LINK, API_KEY }) {
+function factory(axios, mongoose) {
   const exports = { Api, connectDatabase }
 
   function Api(endpoint) {
     return axios.create({
-      baseURL: `${API_LINK}/${endpoint}`,
+      baseURL: `${process.env.API_LINK}/${endpoint}`,
       headers: {
-        'user-key': API_KEY
+        'user-key': process.env.API_KEY
       }
     })
   }

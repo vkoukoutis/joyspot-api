@@ -1,15 +1,15 @@
 module.exports = factory
 
-function factory(cookieParser, jwt, helmet, env) {
+function factory(cookieParser, jwt, helmet) {
   const exports = { applyMiddleware }
 
   function applyMiddleware(app) {
-    app.use(cookieParser(env.COOKIE_SECRET))
+    app.use(cookieParser(process.env.COOKIE_SECRET))
     app.use((req, res, next) => {
       const { token } = req.cookies
 
       if (token) {
-        const { userId } = jwt.verify(token, env.JWT_SECRET)
+        const { userId } = jwt.verify(token, process.env.JWT_SECRET)
         req.userId = userId
       }
       next()

@@ -1,6 +1,6 @@
 module.exports = factory
 
-function factory(env, jwt, bcrypt) {
+function factory(jwt, bcrypt) {
   const exports = {
     Mutation: { signup, signin, signout, updateUser },
     Query: { me, users }
@@ -16,7 +16,7 @@ function factory(env, jwt, bcrypt) {
     // Create User
     const user = await new ctx.model.user({ ...args, password }).save()
     //Create & set token
-    const token = jwt.sign({ userId: user.id }, env.JWT_SECRET)
+    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET)
 
     ctx.res.cookie('token', token, {
       httpOnly: true,
@@ -42,7 +42,7 @@ function factory(env, jwt, bcrypt) {
       throw new Error('Invalid Password!')
     }
 
-    const token = jwt.sign({ userId: user.id }, env.JWT_SECRET)
+    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET)
 
     ctx.res.cookie('token', token, {
       httpOnly: true,
