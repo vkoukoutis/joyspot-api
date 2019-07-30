@@ -1,8 +1,12 @@
-import bcrypt from 'bcryptjs'
-import jwt from 'jsonwebtoken'
+module.exports = factory
 
-export const UserMutations = {
-  async signup(parent, args, ctx) {
+function factory(env, jwt, bcrypt) {
+  const exports = {
+    Mutation: { signup, signin, signout, updateUser },
+    Query: { me, users }
+  }
+
+  async function signup(parent, args, ctx) {
     if (!args.email || !args.name || !args.password) {
       throw Error('Please fill all fields.')
     }
@@ -10,9 +14,9 @@ export const UserMutations = {
     //Hash Password
     const password = await bcrypt.hash(args.password, 10)
     // Create User
-    const user = await new ctx.model.User({ ...args, password }).save()
+    const user = await new ctx.model.user({ ...args, password }).save()
     //Create & set token
-    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET)
+    const token = jwt.sign({ userId: user.id }, env.JWT_SECRET)
 
     ctx.res.cookie('token', token, {
       httpOnly: true,
@@ -20,14 +24,15 @@ export const UserMutations = {
     })
 
     return user
-  },
-  async signin(parent, { email, password }, ctx) {
+  }
+
+  async function signin(parent, { email, password }, ctx) {
     if (!email || !password) {
       throw Error('Please fill all fields.')
     }
 
     //Check if there is a user with that email
-    const user = await ctx.model.User.findOne({ email })
+    const user = await ctx.model.user.findOne({ email })
     if (!user) {
       throw new Error(`No such user found for email ${email}`)
     }
@@ -37,7 +42,7 @@ export const UserMutations = {
       throw new Error('Invalid Password!')
     }
 
-    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET)
+    const token = jwt.sign({ userId: user.id }, env.JWT_SECRET)
 
     ctx.res.cookie('token', token, {
       httpOnly: true,
@@ -45,17 +50,19 @@ export const UserMutations = {
     })
 
     return user
-  },
-  signout(parent, args, ctx, info) {
+  }
+
+  function signout(parent, args, ctx, info) {
     ctx.res.clearCookie('token')
     return true
-  },
-  async updateUser(parent, { email, name, avatar }, ctx) {
+  }
+
+  async function updateUser(parent, { email, name, avatar }, ctx) {
     if (!ctx.req.userId) {
       throw Error('Please signin first')
     }
 
-    const user = await ctx.model.User.findOneAndUpdate(
+    const user = await ctx.model.user.findOneAndUpdate(
       { _id: ctx.req.userId },
       { $set: { email, name, avatar } },
       { returnNewDocument: true }
@@ -63,4 +70,22 @@ export const UserMutations = {
 
     return user
   }
+
+  function me(parent, args, ctx) {
+    if (!ctx.req.userId) {
+      throw Error('Please signin first')
+    }
+
+    return ctx.model.user.findById(ctx.req.userId)
+  }
+
+  function users(parent, args, ctx) {
+    if (!ctx.req.userId) {
+      throw Error('Please signin first')
+    }
+
+    return ctx.model.user.find()
+  }
+
+  return exports
 }
