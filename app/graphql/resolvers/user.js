@@ -20,7 +20,7 @@ function factory(jwt, bcrypt) {
 
     ctx.res.cookie('token', token, {
       httpOnly: true,
-      maxAge: 1000 * 60 * 60 * 24 * 1
+      maxAge: 1000 * 60 * 60 * 24 * 1 // Cookie lifetime. 1day
     })
 
     return user
@@ -46,7 +46,7 @@ function factory(jwt, bcrypt) {
 
     ctx.res.cookie('token', token, {
       httpOnly: true,
-      maxAge: 1000 * 60 * 60 * 24 * 1
+      maxAge: 1000 * 60 * 60 * 24 * 1 // Cookie lifetime. 1day
     })
 
     return user

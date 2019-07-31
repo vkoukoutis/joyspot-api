@@ -10,6 +10,7 @@ function factory(cookieParser, jwt, helmet) {
 
       if (token) {
         const { userId } = jwt.verify(token, process.env.JWT_SECRET)
+        if (!userId) throw Error('JWT verification failed')
         req.userId = userId
       }
       next()

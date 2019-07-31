@@ -10,7 +10,7 @@ function factory(ApolloServer, Api, resolvers, schema, models) {
     }
     const server = ApolloConfig
 
-    return server.applyMiddleware({ app, cors: corsOptions })
+    return server.applyMiddleware({ app, cors: corsOptions, path: '/api' })
   }
 
   function getResolvers() {
@@ -38,10 +38,10 @@ function factory(ApolloServer, Api, resolvers, schema, models) {
     typeDefs: schema(),
     resolvers: getResolvers(),
     introspection: true,
-    playground: true,
+    playground: process.env.NODE_ENV === 'development',
     context: ({ req, res }) => ({
-      ...req,
-      ...res,
+      req,
+      res,
       model: getModels(),
       util: {
         Api
