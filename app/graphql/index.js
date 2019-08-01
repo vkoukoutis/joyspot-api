@@ -17,8 +17,14 @@ function factory(ApolloServer, Api, resolvers, schema, models) {
     const allResolvers = { Query: {}, Mutation: {} }
 
     Object.keys(resolvers).forEach(resolver => {
-      allResolvers.Query = { ...resolvers[resolver].Query }
-      allResolvers.Mutation = { ...resolvers[resolver].Mutation }
+      allResolvers.Query = {
+        ...allResolvers.Query,
+        ...resolvers[resolver].Query
+      }
+      allResolvers.Mutation = {
+        ...allResolvers.Mutation,
+        ...resolvers[resolver].Mutation
+      }
     })
 
     return allResolvers

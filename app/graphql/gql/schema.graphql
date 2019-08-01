@@ -1,4 +1,5 @@
 # import * from 'user.graphql'
+# import * from 'products.graphql'
 
 type Query {
   me: User!
@@ -6,6 +7,7 @@ type Query {
 }
 
 type Mutation {
+  games(name: String!): [Product!]!
   signup(
     email: String!
     password: String!
