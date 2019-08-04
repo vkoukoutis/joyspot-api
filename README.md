@@ -32,7 +32,7 @@ Application is deploy in heroku.com and running in production mode.
 
 - Apollo GraphQL with Node.js - Express.js
 - MongoDB
-- Babel 7
+- DI + Factory Pattern
 
 ## Contributing
 
